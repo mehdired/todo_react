@@ -1,0 +1,5 @@
+# misc
+.DS_Store
+
+#depedencies
+/node_modules
