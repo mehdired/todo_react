@@ -1,7 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const dev = process.env.NODE_ENV === 'dev'
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const cssLoader = [
   { loader: 'css-loader', options: { importLoaders: 1, minimize: true } }
@@ -14,11 +15,11 @@ if (!dev) {
       plugins: (loader) => [
         require('autoprefixer')({
           browsers: ['last 3 versions', 'ie >= 11']
-        }),
+        })
       ]
     }
   })
-} 
+}
 
 const config = {
   entry: {
@@ -32,6 +33,10 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  devServer: {
+    // Pour afficher les erreurs sur la page
+    overlay: true
+  },
   module: {
     rules: [
       {
@@ -42,14 +47,14 @@ const config = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
+          fallback: 'style-loader',
           use: cssLoader
         })
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
+          fallback: 'style-loader',
           use: [...cssLoader, 'sass-loader']
         })
       }
@@ -64,6 +69,9 @@ const config = {
     new ExtractTextPlugin({
       filename: '[name].css',
       disable: dev
+    }),
+    new UglifyJsPlugin({
+      sourceMap: true
     })
   ]
 }
