@@ -1,7 +1,5 @@
 import React from 'react'
 
-import css from './app.scss'
-
 export default class App extends React.Component {
 
   constructor (props) {
@@ -36,20 +34,29 @@ export default class App extends React.Component {
 
   render () {
     const list = Object.keys(this.state.inputTodo).map((key) =>
-      <li key={key}>
-        <span>{this.state.inputTodo[key]}</span>
-        <input type="checkbox" onChange={(e) => { this.removeItem(key) }} />
+      <li className="list-group-item" key={key}>
+        <div className="input-group-text row">
+          <div className="col-1">
+          <input type="checkbox" onChange={(e) => { this.removeItem(key) }} />
+          </div>
+          <div className="col-11">
+            <span>{this.state.inputTodo[key]}</span>
+          </div>
+          
+        </div>
       </li>
     )
 
     return (
       <form ref={(input) => this.formApp = input}
         onSubmit={(e) => { this.addTodoItem(e, this.enterTodo.value) }}>
-        <ul>
-          { list }
-        </ul>
-        <input type="text" ref={(input) => { this.enterTodo = input }} />
-        <button type="submit">Ajouter</button>
+        <div class="form-group">
+          <ul className="list-group">
+            { list }
+          </ul>
+          <input type="text" ref={(input) => { this.enterTodo = input }} />
+        </div>
+        <button className="btn btn-primary" type="submit">Ajouter</button>
       </form>
     )
   }
