@@ -1,4 +1,5 @@
 import React from 'react'
+import base from '../base'
 
 export default class App extends React.Component {
 
@@ -10,6 +11,28 @@ export default class App extends React.Component {
 
     this.addTodoItem = this.addTodoItem.bind(this)
     this.removeItem = this.removeItem.bind(this)
+  }
+
+  /* componentDidMount () {
+    base.syncState(`https://todoreact-8f442.firebaseio.com/`,
+      {
+        context: this,
+        state: 'inputTodo'
+      }
+    )
+  } */
+
+  componentWillMount () {
+    this.ref = base.syncState(`todo`,
+      {
+        context: this,
+        state: 'inputTodo'
+      }
+    )
+  }
+
+  componentWillUnmount () {
+    base.removeBinding(this.ref)
   }
 
   addTodoItem (event, item) {
@@ -27,7 +50,7 @@ export default class App extends React.Component {
 
   removeItem (key) {
     const todo = this.state.inputTodo
-    delete todo[key]
+    todo[key] = null
 
     this.setState({inputTodo: todo})
   }
@@ -50,7 +73,7 @@ export default class App extends React.Component {
     return (
       <form ref={(input) => this.formApp = input}
         onSubmit={(e) => { this.addTodoItem(e, this.enterTodo.value) }}>
-        <div class="form-group">
+        <div className="form-group">
           <ul className="list-group">
             { list }
           </ul>
