@@ -1,5 +1,4 @@
 import React from 'react'
-import base from '../base'
 
 export default class App extends React.Component {
 
@@ -13,27 +12,6 @@ export default class App extends React.Component {
     this.removeItem = this.removeItem.bind(this)
   }
 
-  /* componentDidMount () {
-    base.syncState(`https://todoreact-8f442.firebaseio.com/`,
-      {
-        context: this,
-        state: 'inputTodo'
-      }
-    )
-  } */
-
-  componentWillMount () {
-    this.ref = base.syncState(`todo`,
-      {
-        context: this,
-        state: 'inputTodo'
-      }
-    )
-  }
-
-  componentWillUnmount () {
-    base.removeBinding(this.ref)
-  }
 
   addTodoItem (event, item) {
     event.preventDefault()
