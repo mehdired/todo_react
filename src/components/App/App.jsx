@@ -12,7 +12,6 @@ export default class App extends React.Component {
     this.removeItem = this.removeItem.bind(this)
   }
 
-
   addTodoItem (event, item) {
     event.preventDefault()
 
@@ -28,7 +27,7 @@ export default class App extends React.Component {
 
   removeItem (key) {
     const todo = this.state.inputTodo
-    todo[key] = null
+    delete todo[key]
 
     this.setState({inputTodo: todo})
   }
